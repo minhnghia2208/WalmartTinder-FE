@@ -1,0 +1,43 @@
+<body class="text-center" 
+style="width: 30%; height: 30%; margin: 0 auto;">
+    <main class="form-signin">
+      <form *ngIf="(accountService.currentUser$ | async) == null" 
+      #loginForm="ngForm" (ngSubmit)='login()' autocomplete="off">
+        <a class="navbar-brand"
+        style="color: black; font-size: 40px; font-family: 'FontAwesome', sans-serif" 
+        href="/">
+          <i class="bi bi-bookmark-heart"></i>
+          Walmart Tinder
+        </a> 
+        <div> 
+            <p>Bring you closer to be a true Alpha Male.</p>
+        </div>       
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    
+        <div class="form-floating">
+            <input
+            name="username"
+            [(ngModel)]="model.username"
+            class="form-control mb-2"
+            type="text"
+            placeholder="Username">
+          <label for="floatingInput">UserName</label>
+        </div>
+        <div class="form-floating">
+            <input
+            name="password"
+            [(ngModel)]="model.password"
+            class="form-control mb-2"
+            type="password"
+            placeholder="Password">
+          <label for="floatingPassword">Password</label>
+        </div>
+    
+        <button class="w-50 btn btn-primary" type="submit">Sign in</button>
+        <a routerLink='/register'>
+          <button class="w-50 btn btn-secondary" >Register</button>
+        </a>
+        <p class="mt-5 mb-3 text-muted">© 1998–2021 Nghia, Inc.</p>
+      </form>
+    </main>
+</body>
