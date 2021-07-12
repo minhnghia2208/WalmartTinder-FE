@@ -7,6 +7,7 @@ export class UserParams {
     pageSize = 6;
     orderBy = 'lastActive';
     gender: string = "";
+    attractiveness: string = "Average";
 
     constructor(user: User){
         this.gender = user.gender === 'female'? 'male':'female';

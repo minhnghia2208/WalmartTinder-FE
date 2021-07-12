@@ -23,7 +23,7 @@ export class MemberListComponent implements OnInit {
   user: User = {} as any;
   index: number = 1;
   genderList = [{value: 'male', display: 'Males'}, {value: 'female', display: 'Females'}]
-
+  attractiveness = [{value: 'Average', display: 'Off'}, {value: 'Beautiful', display: 'On'}]
   constructor(private memberService: MembersService, private toastr: ToastrService) {
     this.userParams = this.memberService.getUserParams();
    }

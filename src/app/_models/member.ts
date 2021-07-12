@@ -17,6 +17,5 @@ export interface Member {
     city: string;
     country: string;
     photos: Photo[];
-    waitlist: Member[];
-    temp: number;
+    attractiveness: string;
 }
