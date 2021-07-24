@@ -35,6 +35,7 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { ConfirmDiaglogComponent } from './modals/confirm-diaglog/confirm-diaglog.component';
+import { MlManagementComponent } from './admin/ml-management/ml-management/ml-management.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { ConfirmDiaglogComponent } from './modals/confirm-diaglog/confirm-diaglo
     UserManagementComponent,
     PhotoManagementComponent,
     RolesModalComponent,
-    ConfirmDiaglogComponent
+    ConfirmDiaglogComponent,
+    MlManagementComponent
   ],
   imports: [
     BrowserModule,

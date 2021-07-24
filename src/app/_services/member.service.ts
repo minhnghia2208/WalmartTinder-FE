@@ -8,6 +8,7 @@ import { PaginatedResult } from '../_models/pagination';
 import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
+import { ConfirmService } from './confirm.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 // const httpOptions = {
 //   headers: new HttpHeaders({
@@ -25,7 +26,9 @@ export class MembersService {
   user: User = {} as any;
   userParams: UserParams = {} as any;
 
-  constructor(private http: HttpClient, private accountService: AccountService) { 
+  constructor(private http: HttpClient
+      , private accountService: AccountService
+      , private confirmService: ConfirmService) { 
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
       this.user = user;
       this.userParams = new UserParams(user);
@@ -115,9 +118,19 @@ export class MembersService {
   deletePhoto(photoId: number){
     return this.http.delete(this.baseUrl + '/users/delete-photo/' + photoId);
   }
+
   addLike(username: string){
+    console.log(this.user);
+    this.user.nLike ++;
+    if (this.user.nLike == 4) {
+      this.user.nLike = 0;
+      this.confirmService.confirm('Machine Learning Session'
+        , 'The ML session will take around 10 minutes to complete'
+        , 'OK Cool', 'Still Ok but in Red').subscribe()
+    }
     return this.http.post(this.baseUrl + '/likes/' + username, {})
   }
+
   getLikes(predicate: string, pageNumber: number, pageSize: number) {
     let params = getPaginationHeaders(pageNumber, pageSize);
     params = params.append('predicate', predicate);

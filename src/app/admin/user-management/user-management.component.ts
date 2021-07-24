@@ -36,7 +36,7 @@ export class UserManagementComponent implements OnInit {
         roles: [...values.filter((el: any) => el.checked === true).map((el: any) => el.name)]
       };
       if (rolesToUpdate){
-        this.adminService.updateUserRoles(user.userName, rolesToUpdate.roles).subscribe(() => {
+      this.adminService.updateUserRoles(user.userName, rolesToUpdate.roles).subscribe(() => {
           user.roles = [...rolesToUpdate.roles]
         })
       }

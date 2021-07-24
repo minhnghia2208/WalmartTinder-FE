@@ -8,12 +8,16 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { catchError } from 'rxjs/operators';
+import { catchError, delay, take } from 'rxjs/operators';
+import { AccountService } from '../_services/account.service';
+import { User } from '../_models/user';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router, private toastr: ToastrService) {}
+  constructor(private router: Router
+    , private toastr: ToastrService
+    , private accountService: AccountService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
@@ -36,8 +40,29 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               break;
             case 401:
-              this.toastr.error(error.statusText, error.status);
+              let currentUser: User = {} as any;
+              this.accountService.currentUser$.pipe(take(1)).subscribe(user => currentUser = user)
+              // if (currentUser) {
+              //   request = request.clone({
+              //     setHeaders:{
+              //       Authorization: `Bearer ${currentUser.refresh_Token}`
+              //     }
+              //   })
+              // }
+              var model = {
+                access_token: currentUser.access_Token,
+              };
+              
+              this.accountService.refresh(model);
+
+              setTimeout(()=>{
+                window.location.reload();
+              }, 100);
+              this.toastr.success("Refreshed")
               break;
+              // this.toastr.error(error.statusText, error.status);
+              // break;
+
             case 404:
               this.toastr.error(error.statusText, error.status);
               this.router.navigateByUrl('/not-found');
